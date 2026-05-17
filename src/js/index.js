@@ -39,7 +39,7 @@ async function carregarSorteios() {
 }
 
 function verificarAcesso() {
-    const token = localStorage.getItem('token_sorteio');
+    const token = sessionStorage.getItem('token');
     
     if (!token) {
         window.location.href = "pages/login.html";

@@ -1,4 +1,3 @@
-/* Centraliza os formulários no meio do Grid <main> */
 main {
     display: flex;
     justify-content: center;

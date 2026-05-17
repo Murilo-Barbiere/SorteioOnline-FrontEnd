@@ -1,11 +1,9 @@
-/* GRID DE CARDS EXCLUSIVA DA HOME */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 25px;
 }
 
-/* O CARD INDIVIDUAL (Flexbox) */
 .card-sorteio {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);

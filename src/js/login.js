@@ -22,7 +22,7 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
 
         const dados = await response.json();
         
-        localStorage.setItem('token_sorteio', dados.token);
+        sessionStorage.setItem('token', dados.token);
 
         alert('Login efetuado com sucesso!');
         window.location.href = '../index.html';
