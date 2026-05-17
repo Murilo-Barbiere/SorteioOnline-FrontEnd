@@ -1,0 +1,88 @@
+/* Centraliza os formulários no meio do Grid <main> */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-container {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.auth-container h2 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#form-login, #form-register {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    outline: none;
+    padding: 14px 18px;
+    border-radius: 16px;
+    color: #fff;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.input-group input:focus {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-auth {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid #ffffff;
+    padding: 14px;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+.btn-auth:hover {
+    background: #ffffff;
+    color: #000066;
+    font-weight: 600;
+}
+
+.toggle-text {
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.toggle-text a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}

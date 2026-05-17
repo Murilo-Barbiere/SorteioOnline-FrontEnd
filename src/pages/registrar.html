@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio Online - Cadastrar</title>
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/login.css">
+</head>
+<body>
+    <div class="container">
+        
+        <header>
+            <h1>Sorteio Online</h1>
+            <div class="auth-links">
+                <a href="../index.html">Voltar ao Início</a>
+            </div>
+        </header>
+        
+        <aside>
+            <a href="../index.html">Início</a>
+        </aside>
+        
+        <main>
+            <div class="auth-container">
+                <h2>Criar Conta</h2>
+                <form id="form-register">
+                    <div class="input-group">
+                        <label for="reg-nome">Nome Completo</label>
+                        <input type="text" id="reg-nome" required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-senha">Senha</label>
+                        <input type="password" id="reg-senha" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Cadastrar</button>
+                </form>
+                <p class="toggle-text">Já tem conta? <a href="login.html">Faça Login</a></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Sistema de Sorteios Online</p>
+        </footer>
+    </div>
+
+    <script src="../js/registrar.js"></script>
+</body>
+</html>
