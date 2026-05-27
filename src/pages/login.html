@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <title>Sorteio Online - Entrar</title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteio Online - Entrar</title>
+
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/login.css">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <div class="container">
@@ -13,12 +17,12 @@
         <header>
             <h1>Sorteio Online</h1>
             <div class="auth-links">
-                <a href="../index.html">Voltar ao Início</a>
+                <a href="index.html">Voltar ao Início</a>
             </div>
         </header>
         
         <aside>
-            <a href="../index.html">Início</a>
+            <a href="index.html">Início</a>
         </aside>
         
         <main>
@@ -29,11 +33,30 @@
                         <label for="login-email">E-mail / Usuário</label>
                         <input type="text" id="login-email" required autocomplete="off">
                     </div>
+
                     <div class="input-group">
                         <label for="login-senha">Senha</label>
                         <input type="password" id="login-senha" required>
                     </div>
+
                     <button type="submit" class="btn-auth">Entrar</button>
+
+                    <div class = divider></div>
+                        <div id="g_id_onload"
+                            data-client_id="923197901865-70b6fpl6pou975uejhsq187bgecgia5v.apps.googleusercontent.com"
+                            data-callback="handleCredentialResponse">
+                        </div>
+
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-size="large"
+                            data-theme="filled_black"
+                            data-text="continue_with"
+                            data-shape="pill"
+                            data-logo_alignment="left">
+                        </div>
+                    </div>
+
                 </form>
                 <p class="toggle-text">Não tem conta? <a href="registrar.html">Registre-se aqui</a></p>
             </div>
@@ -44,6 +67,7 @@
         </footer>
     </div>
 
+    <script src="../js/login-google.js"></script>
     <script src="../js/login.js"></script>
 </body>
 </html>

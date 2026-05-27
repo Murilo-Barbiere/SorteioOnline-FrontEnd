@@ -40,7 +40,7 @@ async function carregarSorteios() {
 
 function verificarAcesso() {
     const token = sessionStorage.getItem('token');
-    
+
     if (!token) {
         window.location.href = "pages/login.html";
     } else {

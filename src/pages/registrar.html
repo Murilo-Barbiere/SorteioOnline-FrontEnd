@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Sorteio Online - Cadastrar</title>
+
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/login.css">
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
+
 <body>
     <div class="container">
         
@@ -25,19 +30,41 @@
             <div class="auth-container">
                 <h2>Criar Conta</h2>
                 <form id="form-register">
+
                     <div class="input-group">
                         <label for="reg-nome">Nome Completo</label>
                         <input type="text" id="reg-nome" required autocomplete="off">
                     </div>
+
                     <div class="input-group">
                         <label for="reg-email">E-mail</label>
                         <input type="email" id="reg-email" required autocomplete="off">
                     </div>
+
                     <div class="input-group">
                         <label for="reg-senha">Senha</label>
                         <input type="password" id="reg-senha" required>
                     </div>
+
                     <button type="submit" class="btn-auth">Cadastrar</button>
+
+                    <div class = divider></div>
+                        <div id="g_id_onload"
+                            data-client_id="923197901865-70b6fpl6pou975uejhsq187bgecgia5v.apps.googleusercontent.com"
+                            data-callback="handleCredentialResponse"
+                            data-itp_support="true"> 
+                        </div>
+
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-size="large"
+                            data-theme="filled_black"
+                            data-text="continue_with"
+                            data-shape="pill"
+                            data-logo_alignment="left">
+                        </div>
+                    </div>
+
                 </form>
                 <p class="toggle-text">Já tem conta? <a href="login.html">Faça Login</a></p>
             </div>
@@ -49,5 +76,6 @@
     </div>
 
     <script src="../js/registrar.js"></script>
+    <script src="../js/registro-google.js"></script> </body>
 </body>
 </html>
