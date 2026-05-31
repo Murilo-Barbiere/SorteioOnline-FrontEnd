@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Sorteio Online - Início</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/user.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <h1>PERFIL</h1>
+            <div class="auth-links">
+                <a href="../pages/login.html">Logar</a> | <a href="../pages/registrar.html">Registrar</a> 
+            </div>
+        </header>
+        
+        <aside>
+            <a href="../index.html" class="active">Início</a>
+            <a href="">Criar Sorteio</a>
+            <a href="">Meus Sorteios</a>
+        </aside>
+        
+        <main>
+            <div class="profile-card">
+                <div class="usuario" id="container-usuario">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="Icone de usuario">
+                </div>
+
+                <div class="input-group">
+                    <label for="nome">NOME</label>
+                    <input type="text" id="nome" value="Joao Mendes" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">E-MAIL</label>
+                    <input type="text" id="email" value="joao.mendes@email.com" disabled>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" id="button-editar">EDITAR</button>
+                    <button type="button" id="button-excluir">EXCLUIR CONTA</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Sistema de Sorteios Online</p>
+        </footer>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>
