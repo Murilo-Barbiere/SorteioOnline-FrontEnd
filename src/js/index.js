@@ -42,9 +42,9 @@ function verificarAcesso() {
     const token = sessionStorage.getItem('token');
 
     if (!token) {
-        window.location.href = "pages/login.html";
+        window.location.href = "src/pages/login.html";
     } else {
-        window.location.href = "pages/testeAuth.html";
+        window.location.href = "src/pages/detalhes_sorteio.html";
     }
 }
 

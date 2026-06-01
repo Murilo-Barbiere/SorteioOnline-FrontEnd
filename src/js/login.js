@@ -25,7 +25,7 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
         sessionStorage.setItem('token', dados.token);
 
         alert('Login efetuado com sucesso!');
-        window.location.href = '../index.html';
+        window.location.href = '../../index.html';
 
     } catch (error) {
         alert(error.message);

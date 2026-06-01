@@ -28,7 +28,7 @@ async function handleCredentialResponse(response) {
         sessionStorage.setItem("token", data.token);
 
         alert('Login efetuado com sucesso!');
-        window.location.href = '../index.html';
+        window.location.href = '../../index.html';
 
     } catch (err) {
 

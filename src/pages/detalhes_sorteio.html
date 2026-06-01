@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Sorteio</title>
+
+    <link rel="stylesheet" href="global.css">
+    
+    <link rel="stylesheet" href="../style/detalhes_sorteio.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>SorteioOnline</h1>
+            <div class="auth-links">
+                <a href="#">Entrar</a>
+                <a href="#" class="btn-registrar">Criar Conta</a>
+            </div>
+        </header>
+        
+        <aside>
+            <a href="#">Início</a>
+            <a href="#" class="active">Explorar Sorteios</a>
+            <a href="#">Meus Bilhetes</a>
+        </aside>
+        
+        <main>
+            <div id="loading" class="loading">Buscando detalhes do sorteio...</div>
+            
+            <div id="detalhes-sorteio" class="detalhes-container" style="display: none;">
+                
+                <div class="capa-container">
+                    <img id="img-capa" src="" alt="Capa do Sorteio">
+                </div>
+
+                <div class="info-header">
+                    <h2 id="nome-sorteio">Nome do Sorteio</h2>
+                    <span id="status-sorteio" class="badge-status">Status</span>
+                </div>
+
+                <div class="descricao-box">
+                    <h3>Sobre o Sorteio</h3>
+                    <p id="desc-sorteio">Descrição detalhada do sorteio carregada dinamicamente.</p>
+                </div>
+
+                <div class="galeria-section">
+                    <h3>Galeria de Fotos</h3>
+                    <div id="galeria-fotos" class="galeria-grid">
+                        </div>
+                </div>
+
+            </div>
+        </main>
+        
+        <footer>
+            &copy; 2026 SorteioOnline. Todos os direitos reservados.
+        </footer>
+    </div>
+
+    <script>
+        // Configuração Base da API (Ajuste a porta se necessário)
+        const BASE_URL = 'http://localhost:8080';
+        
+        // Simulação: Pegar o ID do sorteio da URL (ex: meudominio.com/detalhes.html?id=1)
+        // Se não houver ID na URL, usa o ID 1 como fallback para testes.
+        const urlParams = new URLSearchParams(window.location.search);
+        const sorteioId = urlParams.get('id') || 1; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarDadosDoSorteio(sorteioId);
+        });
+
+        async function carregarDadosDoSorteio(id) {
+            try {
+                // 1. Fetch dos dados textuais do sorteio
+                const response = await fetch(`${BASE_URL}/sorteio/${id}`);
+                if (!response.ok) throw new Error('Sorteio não encontrado.');
+                
+                const sorteio = await response.json();
+
+                // 2. Preencher a interface
+                document.getElementById('nome-sorteio').textContent = sorteio.nomeSorteio;
+                document.getElementById('desc-sorteio').textContent = sorteio.descricao;
+                document.getElementById('status-sorteio').textContent = sorteio.statusSorteio.replace('_', ' '); // Formata o enum
+
+                // 3. Carregar a Capa (Inserindo a URL diretamente no src)
+                const imgCapa = document.getElementById('img-capa');
+                imgCapa.src = `${BASE_URL}/imagem/sorteio/${id}/foto-capa`;
+                
+                // Tratamento caso a imagem de capa falhe ao carregar
+                imgCapa.onerror = function() {
+                    this.src = 'https://via.placeholder.com/800x350/000066/FFFFFF?text=Sem+Foto+de+Capa';
+                };
+
+                // 4. Buscar os IDs das 3 imagens de exemplo e renderizar
+                await carregarImagensExemplo(id);
+
+                // Trocar telas (Esconde loading, mostra conteúdo)
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('detalhes-sorteio').style.display = 'flex';
+
+            } catch (error) {
+                console.error("Erro na API:", error);
+                const loadingDiv = document.getElementById('loading');
+                loadingDiv.className = 'error';
+                loadingDiv.textContent = 'Ocorreu um erro ao carregar as informações do sorteio.';
+            }
+        }
+
+        async function carregarImagensExemplo(sorteioId) {
+            try {
+                const response = await fetch(`${BASE_URL}/imagem/sorteio/${sorteioId}/fotos`);
+                if (!response.ok) return;
+
+                const idsDasFotos = await response.json(); // Array de Long [1, 2, 3, 4...]
+                const galeriaContainer = document.getElementById('galeria-fotos');
+                
+                // Pegamos apenas os 3 primeiros IDs, conforme solicitado
+                const ultimasTresFotos = idsDasFotos.slice(0, 3);
+
+                if (ultimasTresFotos.length === 0) {
+                    galeriaContainer.innerHTML = '<p style="color: rgba(255,255,255,0.5);">Nenhuma foto de exemplo anexada.</p>';
+                    return;
+                }
+
+                // Cria uma tag <img> para cada ID e injeta na grid
+                ultimasTresFotos.forEach(fotoId => {
+                    const imgElement = document.createElement('img');
+                    // Nota: Baseado no seu controller, a rota para retornar imagem pura é mapeada no raiz da controller de Imagem.
+                    // Assumindo que a rota seja '/imagem/{id}' ou apenas '/{id}' na base da API.
+                    // Ajuste "/imagem/" abaixo para o RequestMapping exato do seu controller de imagens.
+                    imgElement.src = `${BASE_URL}/imagem/${fotoId}`;
+                    imgElement.alt = `Exemplo de prêmio ${fotoId}`;
+                    
+                    imgElement.onerror = function() {
+                        this.src = 'https://via.placeholder.com/300/000066/FFFFFF?text=Erro+na+Imagem';
+                    };
+
+                    galeriaContainer.appendChild(imgElement);
+                });
+
+            } catch (error) {
+                console.error("Erro ao buscar a lista de fotos:", error);
+            }
+        }
+    </script>
+</body>
+</html>
