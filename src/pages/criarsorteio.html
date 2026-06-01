@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Sorteio Online - Início</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/criarsorteio.css">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <header>
+            <h1>CRIAR SORTEIO</h1>
+            <div class="auth-links">
+                <a href="../pages/login.html">Logar</a> | <a href="../pages/registrar.html">Registrar</a> 
+            </div>
+        </header>
+        
+        <aside>
+            <a href="../index.html" class="active">Início</a>
+            <a href="">Criar Sorteio</a>
+            <a href="">Meus Sorteios</a>
+        </aside>
+        
+        <main>
+            <div class="profile-card">
+                <div class="usuario" id="container-usuario">
+                    <img src="https://http2.mlstatic.com/D_NQ_NP_2X_955993-MLA95356227225_102025-F.webp" alt="Item do sorteio">
+                </div>
+
+                <div class="input-group">
+                    <label for="nome">NOME DO SORTEIO</label>
+                    <input type="text" id="nome" value="Iphone 17" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="data">DATA DO SORTEIO</label>
+                    <input type="date" id="data" value="" disabled>
+                </div>
+
+                <div class="input-group">
+                    <label for="descricao">DESCRIÇÃO DO SORTEIO</label>
+                    <textarea name="descricao" id="descricao">"O item a ser sorteado será um Iphone 17 Pro 256GB - Azul-profundo"</textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" id="button-editar">SALVAR</button>
+                    <button type="button" id="button-excluir">CANCELAR</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Sistema de Sorteios Online</p>
+        </footer>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+</html>

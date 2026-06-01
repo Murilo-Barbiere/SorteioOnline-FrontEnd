@@ -1,0 +1,113 @@
+/* --- user.css --- */
+
+/* Alinhamento e centralização do bloco de conteúdo dentro da grid global */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+/* Container do formulário em formato de cartão centralizado */
+.profile-card {
+    width: 100%;
+    max-width: 420px; /* Largura ideal para um visual compacto e elegante */
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Área da imagem do item (REDUZIDA) */
+#container-usuario {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#container-usuario img {
+    width: 180px; /* Tamanho reduzido para não dominar a tela */
+    height: 180px;
+    object-fit: contain; /* Garante que a foto do produto apareça inteira sem cortes */
+    background-color: #ffffff; /* Fundo branco para destacar o produto como na imagem */
+    border-radius: 12px;
+    padding: 10px;
+}
+
+/* Configuração dos grupos de Input e Label */
+.input-group {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 4px;
+}
+
+/* Estilização dos campos de Texto e Textarea */
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    background-color: rgba(94, 96, 139, 0.8); /* Tom roxo acinzentado da imagem */
+    border: none;
+    border-radius: 10px;
+    padding: 12px 15px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    resize: none; /* Impede que o usuário deforme o layout arrastando o canto */
+    box-sizing: border-box;
+}
+
+/* Altura específica e menor para a descrição */
+.input-group textarea {
+    height: 80px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Alinhamento dos botões */
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.button-group button {
+    flex: 1;
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid #ffffff;
+    border-radius: 10px;
+    padding: 10px 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* Efeito ao passar o mouse nos botões */
+.button-group button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button-group button:active {
+    transform: scale(0.98);
+}
