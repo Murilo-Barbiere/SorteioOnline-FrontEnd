@@ -26,7 +26,7 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
         sessionStorage.setItem('token', dados.token);
 
         if (payloadToken && payloadToken.role === 'ROLE_ADMIN') { 
-            window.location.href = '../painel-admin.html';
+            window.location.href = '../../src/pages/painel-admin.html';
         }
         else{
             window.location.href = '../../index.html';
