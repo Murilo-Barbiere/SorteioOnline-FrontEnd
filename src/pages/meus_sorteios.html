@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio Online - Meus Sorteios</title>
+
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/index.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sorteio Online</h1>
+            <div class="auth-links">
+                <a href="#" onclick="sair()">Sair</a> 
+            </div>
+        </header>
+        
+        <aside>
+            <a href="../../index.html">Início</a>
+            <a href="#">Criar Sorteio</a>
+            <a href="meus_sorteios.html" class="active">Meus Sorteios</a>
+        </aside>
+        
+        <main>
+            <h2>Sorteios que Participo</h2>
+            
+            <div class="cards" id="container-meus-sorteios">
+                <p id="loading-msg">Carregando seus sorteios...</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Sistema de Sorteios Online</p>
+        </footer>
+    </div>
+
+    <script src="../js/meus_sorteios.js"></script>
+</body>
+</html>

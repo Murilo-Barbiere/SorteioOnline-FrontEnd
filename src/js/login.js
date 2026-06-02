@@ -21,14 +21,38 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
         }
 
         const dados = await response.json();
-        
+        const payloadToken = parseJwt(dados.token);
+
         sessionStorage.setItem('token', dados.token);
 
-        alert('Login efetuado com sucesso!');
-        window.location.href = '../../index.html';
+        if (payloadToken && payloadToken.role === 'ROLE_ADMIN') { 
+            window.location.href = '../painel-admin.html';
+        }
+        else{
+            alert('Login efetuado com sucesso!');
+            window.location.href = '../../index.html';
+        }
 
     } catch (error) {
         alert(error.message);
         console.error('Erro no login:', error);
     }
 });
+
+function parseJwt(token) {
+    try {
+        if (!token) return null;
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            window.atob(base64)
+                .split('')
+                .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        console.error("Erro ao decodificar o token:", e);
+        return null;
+    }
+}

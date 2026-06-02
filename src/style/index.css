@@ -90,3 +90,25 @@
     margin: 0 10px;
     font-size: 0.8rem;
 }
+
+.card-capa-container {
+    width: 100%;
+    height: 160px; /* Define uma altura fixa para manter harmonia visual na grid */
+    border-radius: 12px; /* Cantos arredondados ligeiramente menores que o card (18px) */
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.1); /* Fundo sutil caso a imagem demore para carregar */
+}
+
+.card-capa-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Faz a foto preencher o espaço sem distorcer */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Efeito opcional: Zoom suave na imagem quando passar o mouse sobre o card */
+.card-sorteio:hover .card-capa-container img {
+    transform: scale(1.04);
+}

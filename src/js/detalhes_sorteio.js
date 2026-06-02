@@ -43,10 +43,9 @@ async function carregarImagensExemplo(sorteioId) {
         const response = await fetch(`${BASE_URL}/imagem/sorteio/${sorteioId}/fotos`);
         if (!response.ok) return;
 
-        const idsDasFotos = await response.json(); // Array de Long [1, 2, 3, 4...]
+        const idsDasFotos = await response.json();
         const galeriaContainer = document.getElementById('galeria-fotos');
         
-        // Pegamos apenas os 3 primeiros IDs, conforme solicitado
         const ultimasTresFotos = idsDasFotos.slice(0, 3);
 
         if (ultimasTresFotos.length === 0) {
