@@ -29,7 +29,6 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
             window.location.href = '../painel-admin.html';
         }
         else{
-            alert('Login efetuado com sucesso!');
             window.location.href = '../../index.html';
         }
 
