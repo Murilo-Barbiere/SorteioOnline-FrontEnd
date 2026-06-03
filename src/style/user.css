@@ -1,0 +1,91 @@
+/* --- index.css --- */
+
+/* Estilização do Container Principal (Área de Conteúdo) */
+main {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    padding: 20px;
+}
+
+/* Nova classe para o cartão de perfil, reduzindo a área ocupada */
+.profile-card {
+    width: 100%;
+    max-width: 360px; /* Largura reduzida para ficar menor */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Borda suave */
+    border-radius: 15px; /* Cantos arredondados do cartão */
+    background: rgba(255, 255, 255, 0.03); /* Fundo sutil para destacar */
+}
+
+/* Área da Imagem de Perfil */
+#container-usuario {
+    margin-bottom: 20px;
+}
+
+#container-usuario img {
+    width: 100px; /* Tamanho reduzido da imagem */
+    height: 100px;
+    border-radius: 20px; /* Cantos arredondados */
+    background-color: #e0e0e0;
+    object-fit: cover;
+}
+
+/* Grupos de Inputs e Labels */
+.input-group {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 15px; /* Espaçamento reduzido */
+}
+
+.input-group label {
+    font-size: 0.7rem; /* Tamanho da fonte menor */
+    font-weight: 600;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.input-group input {
+    width: 100%;
+    background-color: rgba(94, 96, 139, 0.8); /* Cor do input */
+    border: none;
+    border-radius: 8px; /* Cantos menos arredondados */
+    padding: 10px; /* Padding reduzido para diminuir a altura */
+    color: #ffffff;
+    font-size: 1rem; /* Fonte menor dentro do input */
+    text-align: center;
+}
+
+/* Grupo de Botões */
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Espaço menor entre botões */
+    margin-top: 20px;
+}
+
+.button-group button {
+    flex: 1;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #ffffff; /* Borda mais fina */
+    border-radius: 6px; /* Cantos menos arredondados */
+    padding: 8px 0; /* Padding reduzido para diminuir a altura */
+    font-size: 0.75rem; /* Fonte menor nos botões */
+    font-weight: 600;
+    text-transform: uppercase; /* Texto em maiúsculo */
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Efeito Hover nos botões */
+.button-group button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
