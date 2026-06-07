@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Sorteio Online</title>
+    
+    <link rel="stylesheet" href="../style/global.css">
+    
+    <link rel="stylesheet" href="../style/adm.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Painel Admin</h1>
+            <div class="auth-links">
+                <span id="admin-name">Olá, Admin</span>
+                <a href="#" onclick="logout()">Sair</a>
+            </div>
+        </header>
+
+        <aside>
+            <a href="#" id="menu-usuarios" class="active" onclick="showSection('usuarios')">👥 Gerenciar Usuários</a>
+            <a href="#" id="menu-sorteios" onclick="showSection('sorteios')">🎁 Gerenciar Sorteios</a>
+        </aside>
+
+        <main id="main-content">
+            <section id="section-usuarios">
+                <h2>Usuários do Sistema</h2>
+                <div class="table-container">
+                    <table id="tabela-usuarios">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="section-sorteios" style="display: none;">
+                <h2>Sorteios Cadastrados</h2>
+                <div class="table-container">
+                    <table id="tabela-sorteios">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            Sorteio Online © 2026 - Painel Administrativo
+        </footer>
+    </div>
+
+    <div id="modal-user" class="modal">
+        <div class="modal-content">
+            <h3>Editar Usuário</h3>
+            <input type="hidden" id="edit-user-id">
+            <input type="text" id="edit-user-nome" placeholder="Nome">
+            <input type="email" id="edit-user-email" placeholder="Email">
+            <input type="password" id="edit-user-senha" placeholder="Nova Senha (opcional)">
+            
+            <h4>Foto de Perfil</h4>
+            <input type="file" id="edit-user-foto">
+            <button class="btn-upload" onclick="uploadFotoPerfil()">Atualizar Foto</button>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="fecharModal('modal-user')">Cancelar</button>
+                <button class="btn-save" onclick="salvarUsuario()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-sorteio" class="modal">
+        <div class="modal-content">
+            <h3>Editar Sorteio</h3>
+            <input type="hidden" id="edit-sorteio-id">
+            <input type="text" id="edit-sorteio-nome" placeholder="Nome do Sorteio">
+            <textarea id="edit-sorteio-desc" placeholder="Descrição"></textarea>
+            <label class="switch-container">
+                <span>Status:</span>
+                
+                <label class="switch">
+                    <input type="checkbox" id="edit-sorteio-status">
+                    <span class="slider"></span>
+                </label>
+
+                <span id="status-text">Encerrado</span>
+            </label>
+            
+            <h4>Foto de Capa</h4>
+            <input type="file" id="edit-sorteio-capa">
+            <button class="btn-upload" onclick="uploadFotoCapa()">Atualizar Capa</button>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="fecharModal('modal-sorteio')">Cancelar</button>
+                <button class="btn-save" onclick="salvarSorteio()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-participantes" class="modal">
+        <div class="modal-content modal-large">
+            <h3>Participantes do Sorteio</h3>
+            <input type="hidden" id="participante-sorteio-id">
+            <ul id="lista-participantes" class="participantes-list">
+                </ul>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="fecharModal('modal-participantes')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/admin.js"></script>
+</body>
+</html>
