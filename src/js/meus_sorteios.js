@@ -1,90 +1,159 @@
-// Assumindo que a rota no controller de sorteio baseie-se em /sorteio
-const API_MEUS_SORTEIOS = 'http://localhost:8080/sorteio/participando';
-const BASE_URL = 'http://localhost:8080';
+/**
+ * meus_sorteios.js — Sorteios criados pelo usuário + sorteios que participa
+ * Requer: utils.js
+ */
 
-async function carregarMeusSorteios() {
-    const container = document.getElementById('container-meus-sorteios');
-    const token = sessionStorage.getItem('token');
-
-    // Se não houver token, redireciona para login imediatamente
-    if (!token) {
-        alert("Sua sessão expirou ou você não está logado.");
-        window.location.href = "login.html";
+(function () {
+    if (!isLogado()) {
+        window.location.href = resolveRaiz('src/pages/login.html');
         return;
     }
 
-    try {
-        const response = await fetch(API_MEUS_SORTEIOS, {
-            method: 'GET',
-            headers: {
-                // Passando o JWT token no cabeçalho para o @AuthenticationPrincipal do Spring Security
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
+    // ── Tabs ─────────────────────────────────────────────────────────────────
+    document.querySelectorAll('.tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+
+            const tab = btn.dataset.tab;
+            document.getElementById('secao-criados').style.display     = tab === 'criados'      ? '' : 'none';
+            document.getElementById('secao-participando').style.display = tab === 'participando' ? '' : 'none';
         });
+    });
 
-        if (response.status === 401 || response.status === 403) {
-            throw new Error("Não autorizado. Faça login novamente.");
-        }
+    // ── Helpers de card ───────────────────────────────────────────────────────
+    function cardHTML(sorteio, modoEditor = false) {
+        const urlCapa    = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
+        const statusFmt  = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
+        const statusCls  = sorteio.statusSorteio === 'encerrado' ? 'status-enc' : 'status-ativo';
 
-        if (!response.ok) {
-            throw new Error('Erro ao buscar sorteios.');
-        }
+        const acoes = modoEditor
+            ? `<div class="card-footer card-owner-acoes">
+                   <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">✏️ Editar</button>
+                   <button class="btn-participar btn-ver-card"
+                           onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
+                       Ver detalhes
+                   </button>
+               </div>`
+            : `<div class="card-footer">
+                   <button class="btn-participar"
+                           onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
+                       Ver Sorteio
+                   </button>
+               </div>`;
 
-        const sorteios = await response.json();
-        container.innerHTML = ''; // Limpa a mensagem de carregamento
-
-        if (sorteios.length === 0) {
-            container.innerHTML = '<p>Você ainda não está participando de nenhum sorteio.</p>';
-            return;
-        }
-
-        sorteios.forEach(sorteio => {
-            const urlFotoCapa = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
-            const statusFormatado = sorteio.statusSorteio ? sorteio.statusSorteio.replace('_', ' ') : 'DESCONHECIDO';
-
-            const cardHtml = `
-                <div class="card-sorteio">
-                    <div class="card-capa-container">
-                        <img src="${urlFotoCapa}" alt="Capa de ${sorteio.nomeSorteio}" 
-                             onerror="this.src='https://placehold.co/600x350/000066/FFFFFF?text=Sem+Capa'">
-                    </div>
-
-                    <div class="card-info">
-                        <h3>${sorteio.nomeSorteio}</h3>
-                        <p class="descricao">Status: <strong>${statusFormatado}</strong></p>
-                    </div>
-                    <div class="card-footer">
-                        <button onclick="verDetalhes(${sorteio.id})" class="btn-participar">Ver Sorteio</button>
-                    </div>
+        return `
+            <div class="card-sorteio">
+                <div class="card-capa-container">
+                    <img src="${urlCapa}" alt="Capa"
+                         onerror="this.src='https://placehold.co/600x350/000066/FFFFFF?text=Sem+Capa'">
                 </div>
-            `;
-            
-            container.innerHTML += cardHtml;
-        });
+                <div class="card-info">
+                    <h3>${sorteio.nomeSorteio || 'Sem nome'}</h3>
+                    <p class="descricao ${statusCls}">Status: <strong>${statusFmt}</strong></p>
+                </div>
+                ${acoes}
+            </div>`;
+    }
 
-    } catch (error) {
-        console.error('Erro:', error);
-        container.innerHTML = `<p style="color: #ff4a4a;">${error.message}</p>`;
-        
-        // Se for erro de autorização, limpa o token quebrado e manda pro login
-        if (error.message.includes("Não autorizado")) {
-            sessionStorage.removeItem("token");
-            setTimeout(() => { window.location.href = "login.html"; }, 2000);
+    // ── Carregar sorteios CRIADOS ─────────────────────────────────────────────
+    async function carregarCriados() {
+        const container = document.getElementById('container-criados');
+        try {
+            const res = await fetch(`${BASE_URL}/sorteio/criados`, {
+                headers: authHeaders()
+            });
+            if (!res.ok) throw new Error('Não foi possível carregar.');
+            const sorteios = await res.json();
+
+            container.innerHTML = '';
+            if (sorteios.length === 0) {
+                container.innerHTML = '<p class="empty-msg">Você ainda não criou nenhum sorteio.<br><a href="criar_sorteio.html" style="color:#fff;font-weight:600;">Criar meu primeiro sorteio →</a></p>';
+                return;
+            }
+            sorteios.forEach(s => { container.innerHTML += cardHTML(s, true); });
+        } catch (err) {
+            container.innerHTML = `<p class="empty-msg" style="color:#ff8080;">${err.message}</p>`;
         }
     }
-}
 
-// Função de navegação para a tela de detalhes
-function verDetalhes(id) {
-    window.location.href = `detalhes_sorteio.html?id=${id}`;
-}
+    // ── Carregar sorteios PARTICIPANDO ────────────────────────────────────────
+    async function carregarParticipando() {
+        const container = document.getElementById('container-participando');
+        try {
+            const res = await fetch(`${BASE_URL}/sorteio/participando`, {
+                headers: authHeaders()
+            });
+            if (!res.ok) throw new Error('Não foi possível carregar.');
+            const sorteios = await res.json();
 
-// Função simples para o botão "Sair" do cabeçalho
-function sair() {
-    sessionStorage.removeItem("token");
-    window.location.href = "login.html";
-}
+            container.innerHTML = '';
+            if (sorteios.length === 0) {
+                container.innerHTML = '<p class="empty-msg">Você não está participando de nenhum sorteio ainda.</p>';
+                return;
+            }
+            sorteios.forEach(s => { container.innerHTML += cardHTML(s, false); });
+        } catch (err) {
+            container.innerHTML = `<p class="empty-msg" style="color:#ff8080;">${err.message}</p>`;
+        }
+    }
 
-// Executa a carga assim que a tela abre
-document.addEventListener('DOMContentLoaded', carregarMeusSorteios);
+    // ── Modal de edição ───────────────────────────────────────────────────────
+    window.abrirEdicao = async function (id) {
+        try {
+            const res = await fetch(`${BASE_URL}/sorteio/${id}`);
+            if (!res.ok) throw new Error('Sorteio não encontrado.');
+            const s = await res.json();
+
+            document.getElementById('edit-id').value     = id;
+            document.getElementById('edit-nome').value   = s.nomeSorteio || '';
+            document.getElementById('edit-desc').value   = s.descricao   || '';
+            document.getElementById('edit-status').value = s.statusSorteio || 'ativo';
+
+            abrirModal('modal-editar-sorteio');
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    };
+
+    document.getElementById('btn-salvar-edicao').addEventListener('click', async () => {
+        const id      = document.getElementById('edit-id').value;
+        const nome    = document.getElementById('edit-nome').value.trim();
+        const desc    = document.getElementById('edit-desc').value.trim();
+        const status  = document.getElementById('edit-status').value;
+        const arquivo = document.getElementById('edit-capa').files[0];
+
+        if (!nome) { toast('O nome é obrigatório.', 'error'); return; }
+
+        try {
+            // Atualiza dados do sorteio
+            const res = await fetch(`${BASE_URL}/sorteio/${id}`, {
+                method: 'PUT',
+                headers: authHeaders(),
+                body: JSON.stringify({ nome, descricao: desc, status }),
+            });
+            if (!res.ok) throw new Error(await res.text() || 'Erro ao salvar.');
+
+            // Upload de capa se selecionada
+            if (arquivo) {
+                const fd = new FormData();
+                fd.append('arquivo', arquivo);
+                await fetch(`${BASE_URL}/imagem/sorteio/${id}/foto-capa`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${getToken()}` },
+                    body: fd,
+                }).catch(() => {});
+            }
+
+            fecharModal('modal-editar-sorteio');
+            toast('Sorteio atualizado!', 'success');
+            carregarCriados(); // Recarrega a lista
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    });
+
+    // ── Init ─────────────────────────────────────────────────────────────────
+    carregarCriados();
+    carregarParticipando();
+})();

@@ -1,30 +1,42 @@
-const URL_REGISTER = 'http://localhost:8080/auth/register';
+/**
+ * registrar.js — Cadastro de novo usuário
+ * Requer: utils.js
+ */
 
-document.getElementById('form-register').addEventListener('submit', async (e) => {
+document.getElementById('form-register').addEventListener('submit', async e => {
     e.preventDefault();
 
-    const nome = document.getElementById('reg-nome').value;
-    const email = document.getElementById('reg-email').value;
+    const nome  = document.getElementById('reg-nome').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
     const senha = document.getElementById('reg-senha').value;
 
+    if (!nome || !email || !senha) {
+        toast('Preencha todos os campos.', 'error');
+        return;
+    }
+
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.disabled    = true;
+    btn.textContent = 'Cadastrando…';
+
     try {
-        const response = await fetch(URL_REGISTER, {
+        const response = await fetch(`${BASE_URL}/auth/register`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nome: nome, email: email, senha: senha })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, email, senha }),
         });
 
         if (!response.ok) {
-            throw new Error('Erro ao registrar usuário. Verifique os dados ou se o email já existe.');
+            const msg = await response.text();
+            throw new Error(msg || 'Erro ao cadastrar. Verifique se o e-mail já está em uso.');
         }
 
-        alert('Cadastro realizado com sucesso!');
-        window.location.href = 'login.html';
+        toast('Cadastro realizado! Redirecionando…', 'success');
+        setTimeout(() => { window.location.href = 'login.html'; }, 1500);
 
-    } catch (error) {
-        alert(error.message);
-        console.error('Erro no registro:', error);
+    } catch (err) {
+        toast(err.message, 'error');
+        btn.disabled    = false;
+        btn.textContent = 'Cadastrar';
     }
 });

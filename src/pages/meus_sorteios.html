@@ -3,40 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorteio Online - Meus Sorteios</title>
-
+    <title>Sorteio Online — Meus Sorteios</title>
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/index.css">
+    <link rel="stylesheet" href="../style/meus_sorteios.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Sorteio Online</h1>
-            <div class="auth-links">
-                <a href="#" onclick="sair()">Sair</a> 
-            </div>
-        </header>
-        
-        <aside>
-            <a href="../../index.html">Início</a>
-            <a href="#">Criar Sorteio</a>
-            <a href="meus_sorteios.html" class="active">Meus Sorteios</a>
-        </aside>
-        
-        <main>
-            <h2>Sorteios que Participo</h2>
-            
-            <div class="cards" id="container-meus-sorteios">
-                <p id="loading-msg">Carregando seus sorteios...</p>
-            </div>
-        </main>
+<div class="container">
 
-        <footer>
-            <p>&copy; 2026 - Sistema de Sorteios Online</p>
-        </footer>
+    <header>
+        <h1>Sorteio Online</h1>
+        <div class="auth-links"></div>
+    </header>
+
+    <aside>
+        <a href="../../index.html">Início</a>
+        <a href="criar_sorteio.html">Criar Sorteio</a>
+        <a href="meus_sorteios.html" class="active">Meus Sorteios</a>
+        <a href="perfil.html">Perfil</a>
+    </aside>
+
+    <main>
+
+        <!-- Aba de navegação -->
+        <div class="tabs">
+            <button class="tab active" data-tab="criados">Sorteios que criei</button>
+            <button class="tab" data-tab="participando">Sorteios que participo</button>
+        </div>
+
+        <!-- Seção: sorteios criados -->
+        <section id="secao-criados" class="secao-sorteios">
+            <div class="cards" id="container-criados">
+                <p class="loading-msg">Carregando…</p>
+            </div>
+        </section>
+
+        <!-- Seção: sorteios participando -->
+        <section id="secao-participando" class="secao-sorteios" style="display:none;">
+            <div class="cards" id="container-participando">
+                <p class="loading-msg">Carregando…</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer><p>© 2026 — Sistema de Sorteios Online</p></footer>
+</div>
+
+<!-- Modal de edição de sorteio -->
+<div class="modal" id="modal-editar-sorteio">
+    <div class="modal-content">
+        <h3>✏️ Editar Sorteio</h3>
+        <input type="hidden" id="edit-id">
+
+        <div class="field-group">
+            <label>Nome</label>
+            <input type="text" id="edit-nome" placeholder="Nome do sorteio">
+        </div>
+
+        <div class="field-group">
+            <label>Descrição</label>
+            <textarea id="edit-desc" rows="3" placeholder="Descrição…"></textarea>
+        </div>
+
+        <div class="field-group">
+            <label>Status</label>
+            <select id="edit-status">
+                <option value="ativo">Ativo</option>
+                <option value="encerrado">Encerrado</option>
+            </select>
+        </div>
+
+        <div class="field-group">
+            <label>Nova foto de capa (opcional)</label>
+            <input type="file" id="edit-capa" accept="image/*"
+                   style="background:rgba(255,255,255,0.06);padding:10px;border-radius:10px;border:1px dashed rgba(255,255,255,0.2);">
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-modal-cancel" onclick="fecharModal('modal-editar-sorteio')">Cancelar</button>
+            <button class="btn-modal-save" id="btn-salvar-edicao">Salvar</button>
+        </div>
     </div>
+</div>
 
-    <script src="config/settings.js"></script>
-    <script src="../js/meus_sorteios.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/meus_sorteios.js"></script>
 </body>
 </html>

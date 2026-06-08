@@ -1,3 +1,5 @@
+/* login.css */
+
 main {
     display: flex;
     justify-content: center;
@@ -5,27 +7,31 @@ main {
 }
 
 .auth-container {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 40px;
     border-radius: 24px;
     width: 100%;
     max-width: 420px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .auth-container h2 {
     font-size: 1.8rem;
     font-weight: 400;
-    margin-bottom: 30px;
+    margin-bottom: 28px;
     text-align: center;
 }
 
-#form-login, #form-register {
+#form-login,
+#form-register {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
 }
 
 .input-group {
@@ -35,49 +41,79 @@ main {
 }
 
 .input-group label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
 }
 
 .input-group input {
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     outline: none;
-    padding: 14px 18px;
-    border-radius: 16px;
+    padding: 13px 16px;
+    border-radius: 14px;
     color: #fff;
-    font-size: 1rem;
-    transition: background 0.3s;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
 }
 
+.input-group input::placeholder { color: rgba(255, 255, 255, 0.3); }
+
 .input-group input:focus {
-    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.14);
 }
 
 .btn-auth {
     background: transparent;
     color: #fff;
-    border: 1.5px solid #ffffff;
-    padding: 14px;
-    border-radius: 20px;
+    border: 1.5px solid #fff;
+    padding: 13px;
+    border-radius: 18px;
     font-size: 1rem;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.3s;
-}
-.btn-auth:hover {
-    background: #ffffff;
-    color: #000066;
     font-weight: 600;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.25s;
+    font-family: inherit;
 }
 
+.btn-auth:hover {
+    background: #fff;
+    color: #000066;
+}
+
+.btn-auth:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ── Divider ──────────────────────────────────────────────────────────────── */
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ── Toggle text ──────────────────────────────────────────────────────────── */
 .toggle-text {
     font-size: 0.85rem;
     text-align: center;
     margin-top: 20px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.55);
 }
 
 .toggle-text a {

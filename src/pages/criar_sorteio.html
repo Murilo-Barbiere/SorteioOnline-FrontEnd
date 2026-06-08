@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio Online — Criar Sorteio</title>
+    <link rel="stylesheet" href="../style/global.css">
+    <link rel="stylesheet" href="../style/criar_sorteio.css">
+</head>
+<body>
+<div class="container">
+
+    <header>
+        <h1>Sorteio Online</h1>
+        <div class="auth-links"></div>
+    </header>
+
+    <aside>
+        <a href="../../index.html">Início</a>
+        <a href="criar_sorteio.html" class="active">Criar Sorteio</a>
+        <a href="meus_sorteios.html">Meus Sorteios</a>
+        <a href="perfil.html">Perfil</a>
+    </aside>
+
+    <main>
+        <div class="criar-wrapper">
+
+            <div class="criar-header">
+                <h2>Novo Sorteio</h2>
+                <p>Preencha os dados abaixo para criar seu sorteio.</p>
+            </div>
+
+            <form id="form-criar" class="criar-form" novalidate>
+
+                <!-- Imagem de capa ---------------------------------------- -->
+                <div class="capa-upload-area" id="capa-upload-area">
+                    <div class="capa-placeholder" id="capa-placeholder">
+                        <span class="capa-icon">🖼️</span>
+                        <span>Clique para adicionar uma foto de capa</span>
+                        <span class="capa-hint">JPG, PNG — até 5 MB</span>
+                    </div>
+                    <img id="capa-preview" src="" alt="Preview da capa" style="display:none;">
+                    <input type="file" id="input-capa" accept="image/*" style="display:none;">
+                </div>
+
+                <!-- Campos ------------------------------------------------ -->
+                <div class="campos-grid">
+
+                    <div class="field-group full">
+                        <label for="nome-sorteio">Nome do sorteio <span class="obrig">*</span></label>
+                        <input type="text" id="nome-sorteio"
+                               placeholder="Ex.: iPhone 17 Pro — Sorteio Especial"
+                               maxlength="80" required>
+                    </div>
+
+                    <div class="field-group full">
+                        <label for="desc-sorteio">Descrição</label>
+                        <textarea id="desc-sorteio" rows="4"
+                                  placeholder="Descreva o que será sorteado, regras, data prevista…"></textarea>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="status-sorteio">Status inicial</label>
+                        <select id="status-sorteio">
+                            <option value="ativo">Ativo</option>
+                            <option value="encerrado">Encerrado</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- Fotos adicionais --------------------------------------- -->
+                <div class="fotos-section">
+                    <label class="fotos-label">Fotos do item (até 3)</label>
+                    <div class="fotos-grid" id="fotos-grid">
+                        <div class="foto-slot" data-slot="0">
+                            <span>+</span>
+                            <input type="file" accept="image/*" class="input-foto-extra">
+                        </div>
+                        <div class="foto-slot" data-slot="1">
+                            <span>+</span>
+                            <input type="file" accept="image/*" class="input-foto-extra">
+                        </div>
+                        <div class="foto-slot" data-slot="2">
+                            <span>+</span>
+                            <input type="file" accept="image/*" class="input-foto-extra">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ações ------------------------------------------------- -->
+                <div class="criar-acoes">
+                    <a href="../../index.html" class="btn-cancelar-criar">Cancelar</a>
+                    <button type="submit" class="btn-criar" id="btn-criar">
+                        <span>Criar Sorteio</span>
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </main>
+
+    <footer><p>© 2026 — Sistema de Sorteios Online</p></footer>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/criar_sorteio.js"></script>
+</body>
+</html>

@@ -5,110 +5,90 @@
 }
 
 .card-sorteio {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 18px;
-    padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
+    gap: 16px;
     transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
 }
 
 .card-sorteio:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
 }
 
-.card-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.card-sorteio h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-}
-
-.card-sorteio .descricao {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.4;
-}
-
-.card-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.card-sorteio .data {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 1px;
-}
-
-.btn-participar {
-    background: transparent;
-    color: #fff;
-    border: 1.5px solid #ffffff;
-    padding: 12px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.3s;
-}
-
-.btn-participar:hover {
-    background: #ffffff;
-    color: #000066;
-    font-weight: 600;
-}
-
-.divider {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    color: rgba(255,255,255,0.6);
-}
-
-.divider::before,
-.divider::after {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.2);
-}
-
-.divider span {
-    margin: 0 10px;
-    font-size: 0.8rem;
-}
-
+/* ── Capa ─────────────────────────────────────────────────────────────────── */
 .card-capa-container {
     width: 100%;
-    height: 160px; /* Define uma altura fixa para manter harmonia visual na grid */
-    border-radius: 12px; /* Cantos arredondados ligeiramente menores que o card (18px) */
+    height: 160px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1); /* Fundo sutil caso a imagem demore para carregar */
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .card-capa-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Faz a foto preencher o espaço sem distorcer */
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
 
-/* Efeito opcional: Zoom suave na imagem quando passar o mouse sobre o card */
 .card-sorteio:hover .card-capa-container img {
-    transform: scale(1.04);
+    transform: scale(1.05);
+}
+
+/* ── Info ─────────────────────────────────────────────────────────────────── */
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 20px;
+}
+
+.card-sorteio h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.card-sorteio .descricao {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.status-ativo strong { color: #00e888; }
+.status-enc strong   { color: rgba(255, 255, 255, 0.4); }
+
+/* ── Rodapé do card ──────────────────────────────────────────────────────── */
+.card-footer {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-participar {
+    background: transparent;
+    color: #fff;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    padding: 11px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    width: 100%;
+    font-family: inherit;
+}
+
+.btn-participar:hover {
+    background: #fff;
+    color: #000066;
+    border-color: #fff;
+    font-weight: 700;
 }

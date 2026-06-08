@@ -1,64 +1,54 @@
-const API_URL = 'http://localhost:8080/sorteio/lista_sorteios';
-const BASE_URL = 'http://localhost:8080'; 
+/**
+ * index.js — Página inicial: lista de sorteios disponíveis
+ * Requer: utils.js
+ */
 
 async function carregarSorteios() {
     const container = document.getElementById('container-cards');
-    
-    if (!container) return; // Garante que o container existe na tela
+    if (!container) return;
 
     try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('Erro na requisição');
-        
-        const sorteios = await response.json();
+        const res = await fetch(`${BASE_URL}/sorteio/lista_sorteios`);
+        if (!res.ok) throw new Error('Erro na requisição');
+
+        const sorteios = await res.json();
         container.innerHTML = '';
 
         if (sorteios.length === 0) {
-            container.innerHTML = '<p>Nenhum sorteio disponível no momento.</p>';
+            container.innerHTML = '<p style="color:rgba(255,255,255,0.5);">Nenhum sorteio disponível no momento.</p>';
             return;
         }
 
         sorteios.forEach(sorteio => {
-            // CORREÇÃO: Alinhado com o seu detalhes_sorteio.js (/imagem/sorteio/{id}/foto-capa)
-            const urlFotoCapa = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
-            
-            // Tratamento seguro para o status do sorteio
-            const statusFormatado = sorteio.statusSorteio ? sorteio.statusSorteio.replace('_', ' ') : 'DISPONÍVEL';
+            const urlCapa   = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
+            const statusFmt = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
 
-            const cardHtml = `
+            container.innerHTML += `
                 <div class="card-sorteio">
                     <div class="card-capa-container">
-                        <img src="${urlFotoCapa}" alt="Capa de ${sorteio.nomeSorteio || 'Sorteio'}" 
+                        <img src="${urlCapa}" alt="Capa de ${sorteio.nomeSorteio || 'Sorteio'}"
                              onerror="this.src='https://placehold.co/600x350/000066/FFFFFF?text=Sem+Capa'">
                     </div>
-
                     <div class="card-info">
                         <h3>${sorteio.nomeSorteio || 'Sorteio Sem Nome'}</h3>
-                        <p class="descricao">${statusFormatado}</p>
+                        <p class="descricao">${statusFmt}</p>
                     </div>
                     <div class="card-footer">
-                        <button onclick="verificarAcesso(${sorteio.id})" class="btn-participar">Participar</button>
+                        <button onclick="irParaDetalhes(${sorteio.id})" class="btn-participar">
+                            Ver Sorteio
+                        </button>
                     </div>
-                </div>
-            `;
-            
-            container.innerHTML += cardHtml;
+                </div>`;
         });
 
-    } catch (error) {
-        console.error('Erro ao carregar sorteios:', error);
-        container.innerHTML = `<p style="color: #ff4a4a;">Erro ao carregar sorteios. Verifique a conexão com o backend.</p>`;
+    } catch (err) {
+        console.error('Erro ao carregar sorteios:', err);
+        container.innerHTML = `<p style="color:#ff8080;">Erro ao carregar sorteios. Verifique a conexão com o servidor.</p>`;
     }
 }
 
-function verificarAcesso(id) {
-    const token = sessionStorage.getItem('token');
-
-    if (!token) {
-        window.location.href = "src/pages/login.html";
-    } else {
-        window.location.href = `src/pages/detalhes_sorteio.html?id=${id}`;
-    }
+function irParaDetalhes(id) {
+    window.location.href = `src/pages/detalhes_sorteio.html?id=${id}`;
 }
 
 document.addEventListener('DOMContentLoaded', carregarSorteios);

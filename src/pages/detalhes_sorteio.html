@@ -3,64 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes do Sorteio</title>
-
-    <link rel="stylesheet" href="global.css">
-    
+    <title>Detalhes do Sorteio — Sorteio Online</title>
+    <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/detalhes_sorteio.css">
 </head>
 <body>
+<div class="container">
 
-    <div class="container">
-        <header>
-            <h1>SorteioOnline</h1>
-            <div class="auth-links">
-                <a href="login.html">Logar</a>
-                <a href="registrar.html" class="btn-registrar">Registrar</a>
+    <header>
+        <h1>Sorteio Online</h1>
+        <div class="auth-links"><!-- utils.js --></div>
+    </header>
+
+    <aside>
+        <a href="../../index.html">Início</a>
+        <a href="criar_sorteio.html">Criar Sorteio</a>
+        <a href="meus_sorteios.html">Meus Sorteios</a>
+        <a href="perfil.html">Perfil</a>
+    </aside>
+
+    <main>
+
+        <!-- Estado de loading -->
+        <div id="loading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Buscando detalhes do sorteio…</p>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div id="detalhes-sorteio" class="detalhes-container" style="display:none;">
+
+            <!-- Capa -->
+            <div class="capa-container">
+                <img id="img-capa" src="" alt="Capa do Sorteio">
             </div>
-        </header>
-        
-        <aside>
-            <a href="/index.html">Início</a>
-            <a href="#" class="active">Explorar Sorteios</a>
-            <a href="#">Criar Sorteio</a>
-            <a href="/src/pages/meus_sorteios.html">Meus Sorteios</a>
-        </aside>
-        
-        <main>
-            <div id="loading" class="loading">Buscando detalhes do sorteio...</div>
-            
-            <div id="detalhes-sorteio" class="detalhes-container" style="display: none;">
-                
-                <div class="capa-container">
-                    <img id="img-capa" src="" alt="Capa do Sorteio">
+
+            <!-- Info header -->
+            <div class="info-header">
+                <div>
+                    <h2 id="nome-sorteio"></h2>
+                    <span id="status-sorteio" class="badge-status"></span>
                 </div>
 
-                <div class="info-header">
-                    <h2 id="nome-sorteio">Nome do Sorteio</h2>
-                    <span id="status-sorteio" class="badge-status">Status</span>
+                <!-- Botão participar (visível apenas para logados e sorteios ativos) -->
+                <div class="acoes-sorteio" id="acoes-sorteio" style="display:none;">
+                    <button class="btn-participar-detalhe" id="btn-participar"
+                            onclick="participarSorteio()">
+                            Participar do Sorteio
+                    </button>
                 </div>
-
-                <div class="descricao-box">
-                    <h3>Sobre o Sorteio</h3>
-                    <p id="desc-sorteio">Descrição detalhada do sorteio carregada dinamicamente.</p>
-                </div>
-
-                <div class="galeria-section">
-                    <h3>Galeria de Fotos</h3>
-                    <div id="galeria-fotos" class="galeria-grid">
-                        </div>
-                </div>
-
             </div>
-        </main>
-        
-        <footer>
-            &copy; 2026 SorteioOnline. Todos os direitos reservados.
-        </footer>
-    </div>
 
-    <script src="config/settings.js"></script>
-    <script src = "../js/detalhes_sorteio.js"></script>
+            <!-- Descrição -->
+            <div class="descricao-box">
+                <h3>Sobre o Sorteio</h3>
+                <p id="desc-sorteio">Nenhuma descrição fornecida.</p>
+            </div>
+
+            <!-- Galeria -->
+            <div class="galeria-section">
+                <h3>Galeria de Fotos</h3>
+                <div id="galeria-fotos" class="galeria-grid"></div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>© 2026 SorteioOnline. Todos os direitos reservados.</footer>
+</div>
+
+<script src="../js/utils.js"></script>
+<script src="../js/detalhes_sorteio.js"></script>
 </body>
 </html>

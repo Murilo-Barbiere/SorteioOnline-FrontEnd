@@ -1,43 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Sorteio Online - Início</title>
-
+    <title>Sorteio Online — Início</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="src/style/global.css">
     <link rel="stylesheet" href="src/style/index.css">
-
 </head>
-
 <body>
-    <div class="container">
+<div class="container">
 
-        <header>
-            <h1>Sorteio Online</h1>
-            <div class="auth-links">
-                <a href="src/pages/login.html">Logar</a> | <a href="src/pages/registrar.html">Registrar</a> 
-            </div>
-        </header>
-        
-        <aside>
-            <a href="index.html" class="active">Início</a>
-            <a href="">Criar Sorteio</a>
-            <a href="src/pages/meus_sorteios.html">Meus Sorteios</a>
-        </aside>
-        
-        <main>
-            <h2>Sorteios Disponíveis</h2>
-            
-            <div class="cards" id="container-cards"></div>
-        </main>
+    <header>
+        <h1>Sorteio Online</h1>
+        <div class="auth-links"><!-- preenchido por utils.js --></div>
+    </header>
 
-        <footer>
-            <p>&copy; 2026 - Sistema de Sorteios Online</p>
-        </footer>
-    </div>
+    <aside>
+        <a href="index.html" class="active">Início</a>
+        <a href="src/pages/criar_sorteio.html">Criar Sorteio</a>
+        <a href="src/pages/meus_sorteios.html">Meus Sorteios</a>
+        <a href="src/pages/perfil.html">Perfil</a>
+    </aside>
 
-    <script src="src/js/index.js"></script>
+    <main>
+        <h2>Sorteios Disponíveis</h2>
+        <div class="cards" id="container-cards"></div>
+    </main>
+
+    <footer><p>© 2026 — Sistema de Sorteios Online</p></footer>
+</div>
+
+<script src="src/js/utils.js"></script>
+<script src="src/js/index.js"></script>
 </body>
 </html>

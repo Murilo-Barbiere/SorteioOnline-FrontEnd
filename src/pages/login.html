@@ -1,74 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <title>Sorteio Online - Entrar</title>
-
+    <title>Sorteio Online — Entrar</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="../style/global.css">
     <link rel="stylesheet" href="../style/login.css">
-
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-    <div class="container">
-        
-        <header>
-            <h1>Sorteio Online</h1>
-            <div class="auth-links">
-                <a href="../../index.html">Voltar ao Início</a>
-            </div>
-        </header>
-        
-        <aside>
-            <a href="../../index.html">Início</a>
-        </aside>
-        
-        <main>
-            <div class="auth-container">
-                <h2>Entrar no Sistema</h2>
-                <form id="form-login">
-                    <div class="input-group">
-                        <label for="login-email">E-mail / Usuário</label>
-                        <input type="text" id="login-email" required autocomplete="off">
-                    </div>
+<div class="container">
 
-                    <div class="input-group">
-                        <label for="login-senha">Senha</label>
-                        <input type="password" id="login-senha" required>
-                    </div>
+    <header>
+        <h1>Sorteio Online</h1>
+        <div class="auth-links">
+            <a href="../../index.html">Voltar ao Início</a>
+        </div>
+    </header>
 
-                    <button type="submit" class="btn-auth">Entrar</button>
+    <aside>
+        <a href="../../index.html">Início</a>
+    </aside>
 
-                    <div class = divider></div>
-                        <div id="g_id_onload"
-                            data-client_id="923197901865-70b6fpl6pou975uejhsq187bgecgia5v.apps.googleusercontent.com"
-                            data-callback="handleCredentialResponse">
-                        </div>
+    <main>
+        <div class="auth-container">
+            <h2>Entrar no Sistema</h2>
 
-                        <div class="g_id_signin"
-                            data-type="standard"
-                            data-size="large"
-                            data-theme="filled_black"
-                            data-text="continue_with"
-                            data-shape="pill"
-                            data-logo_alignment="left">
-                        </div>
-                    </div>
+            <form id="form-login" novalidate>
+                <div class="input-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" required autocomplete="email" placeholder="seu@email.com">
+                </div>
 
-                </form>
-                <p class="toggle-text">Não tem conta? <a href="registrar.html">Registre-se aqui</a></p>
-            </div>
-        </main>
+                <div class="input-group">
+                    <label for="login-senha">Senha</label>
+                    <input type="password" id="login-senha" required placeholder="••••••••">
+                </div>
 
-        <footer>
-            <p>&copy; 2026 - Sistema de Sorteios Online</p>
-        </footer>
-    </div>
+                <button type="submit" class="btn-auth">Entrar</button>
 
-    <script src="config/settings.js"></script>
-    <script src="../js/auth/login-google.js"></script>
-    <script src="../js/auth/login.js"></script>
+                <div class="divider"><span>ou</span></div>
+
+                <div id="g_id_onload"
+                     data-client_id="923197901865-70b6fpl6pou975uejhsq187bgecgia5v.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"></div>
+
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="filled_black"
+                     data-text="continue_with"
+                     data-shape="pill"
+                     data-logo_alignment="left"></div>
+            </form>
+
+            <p class="toggle-text">Não tem conta? <a href="registrar.html">Registre-se aqui</a></p>
+        </div>
+    </main>
+
+    <footer><p>© 2026 — Sistema de Sorteios Online</p></footer>
+</div>
+
+<!-- utils.js não renderiza header de usuário aqui pois já logou -->
+<script src="../js/utils.js"></script>
+<script src="../js/auth/login-google.js"></script>
+<script src="../js/auth/login.js"></script>
 </body>
 </html>
