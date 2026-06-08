@@ -49,14 +49,14 @@
                     <div class="field-group full">
                         <label for="nome-sorteio">Nome do sorteio <span class="obrig">*</span></label>
                         <input type="text" id="nome-sorteio"
-                               placeholder="Ex.: iPhone 17 Pro — Sorteio Especial"
-                               maxlength="80" required>
+                            placeholder="Ex.: iPhone 17 Pro — Sorteio Especial"
+                            maxlength="80" required>
                     </div>
 
                     <div class="field-group full">
                         <label for="desc-sorteio">Descrição</label>
                         <textarea id="desc-sorteio" rows="4"
-                                  placeholder="Descreva o que será sorteado, regras, data prevista…"></textarea>
+                                placeholder="Descreva o que será sorteado, regras, data prevista…"></textarea>
                     </div>
 
                     <div class="field-group">
@@ -65,6 +65,11 @@
                             <option value="ativo">Ativo</option>
                             <option value="encerrado">Encerrado</option>
                         </select>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="data-encerramento">Data e Hora de Encerramento <span class="obrig">*</span></label>
+                        <input type="datetime-local" id="data-encerramento" required>
                     </div>
 
                 </div>

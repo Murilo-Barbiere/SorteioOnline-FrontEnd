@@ -12,7 +12,7 @@
 
     <header>
         <h1>Sorteio Online</h1>
-        <div class="auth-links"><!-- utils.js --></div>
+        <div class="auth-links"></div>
     </header>
 
     <aside>
@@ -24,43 +24,35 @@
 
     <main>
 
-        <!-- Estado de loading -->
         <div id="loading" class="loading-state">
             <div class="spinner"></div>
             <p>Buscando detalhes do sorteio…</p>
         </div>
 
-        <!-- Conteúdo principal -->
         <div id="detalhes-sorteio" class="detalhes-container" style="display:none;">
 
-            <!-- Capa -->
             <div class="capa-container">
                 <img id="img-capa" src="" alt="Capa do Sorteio">
             </div>
 
-            <!-- Info header -->
             <div class="info-header">
                 <div>
                     <h2 id="nome-sorteio"></h2>
                     <span id="status-sorteio" class="badge-status"></span>
+                    
+                    <p id="data-encerramento" style="display:none; margin-top: 10px; font-weight: bold;"></p>
                 </div>
 
-                <!-- Botão participar (visível apenas para logados e sorteios ativos) -->
-                <div class="acoes-sorteio" id="acoes-sorteio" style="display:none;">
-                    <button class="btn-participar-detalhe" id="btn-participar"
-                            onclick="participarSorteio()">
-                            Participar do Sorteio
-                    </button>
-                </div>
+                <div class="acoes-sorteio" id="acoes-sorteio"></div>
             </div>
 
-            <!-- Descrição -->
+            <div id="ganhador-container" style="display:none;"></div>
+
             <div class="descricao-box">
                 <h3>Sobre o Sorteio</h3>
                 <p id="desc-sorteio">Nenhuma descrição fornecida.</p>
             </div>
 
-            <!-- Galeria -->
             <div class="galeria-section">
                 <h3>Galeria de Fotos</h3>
                 <div id="galeria-fotos" class="galeria-grid"></div>

@@ -245,3 +245,20 @@ main {
     }
     .field-group.full { grid-column: 1; }
 }
+
+input[type="datetime-local"].form-input {
+    color-scheme: dark; /* Faz com que o calendário nativo do navegador abra em modo escuro */
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+input[type="datetime-local"].form-input:focus {
+    border-color: #ff007f; /* Ou a cor de destaque principal do seu projeto */
+    outline: none;
+    background: rgba(255, 255, 255, 0.08);
+}

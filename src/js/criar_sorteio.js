@@ -39,13 +39,22 @@
     document.getElementById('form-criar').addEventListener('submit', async e => {
         e.preventDefault();
 
-        const nome     = document.getElementById('nome-sorteio').value.trim();
-        const descricao = document.getElementById('desc-sorteio').value.trim();
-        const status   = document.getElementById('status-sorteio').value;
+        const nome             = document.getElementById('nome-sorteio').value.trim();
+        const descricao        = document.getElementById('desc-sorteio').value.trim();
+        const status           = document.getElementById('status-sorteio').value;
+        const dataEncerramento = document.getElementById('data-encerramento').value; // Captura a data final
 
+        // Validação do nome
         if (!nome) {
             toast('O nome do sorteio é obrigatório.', 'error');
             document.getElementById('nome-sorteio').focus();
+            return;
+        }
+
+        // Validação da data final
+        if (!dataEncerramento) {
+            toast('A data e hora de encerramento são obrigatórias.', 'error');
+            document.getElementById('data-encerramento').focus();
             return;
         }
 
@@ -54,11 +63,11 @@
         btn.querySelector('span').textContent = 'Criando…';
 
         try {
-            // 1. Criar o sorteio
+            // 1. Criar o sorteio enviando os dados e a data final
             const res = await fetch(`${BASE_URL}/sorteio`, {
                 method: 'POST',
                 headers: authHeaders(),
-                body: JSON.stringify({ nome, descricao, status }),
+                body: JSON.stringify({ nome, descricao, status, dataEncerramento }),
             });
 
             if (!res.ok) {

@@ -27,9 +27,15 @@
         const statusFmt = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
         const statusCls = sorteio.statusSorteio === 'encerrado' ? 'status-enc' : 'status-ativo';
 
+        // Condicional para exibir o botão de sorteio apenas se ele não estiver encerrado ainda
+        const btnSortearDinamico = sorteio.statusSorteio !== 'encerrado'
+            ? `<button class="btn-sortear-card" onclick="realizarSorteio(${sorteio.id})">🎲 Sortear</button>`
+            : '';
+
         const acoes = modoEditor
             ? `<div class="card-footer card-owner-acoes">
                    <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">✏️ Editar</button>
+                   ${btnSortearDinamico}
                    <button class="btn-participar btn-ver-card"
                            onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
                        Ver detalhes
@@ -153,6 +159,31 @@
             toast(err.message, 'error');
         }
     });
+
+    // ── Disparar Ação de Sortear Manualmente (Novo) ───────────────────────────
+    window.realizarSorteio = async function (idSorteio) {
+        if (!confirm('Deseja realmente realizar este sorteio agora? O sistema escolherá um vencedor e disparará as notificações por e-mail.')) return;
+
+        try {
+            const res = await fetch(`${BASE_URL}/sorteio/sortear/${idSorteio}`, {
+                method: 'GET',
+                headers: authHeaders()
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || 'Não foi possível realizar o sorteio.');
+            }
+
+            const ganhador = await res.json();
+            toast(`Sorteio concluído! Vencedor(a): ${ganhador.nome} 🎉`, 'success');
+            
+            // Recarrega a aba de criados para sumir com o botão "Sortear" e mudar o status para encerrado
+            carregarCriados(); 
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    };
 
     // ── Sair do sorteio ───────────────────────────────────────────────────────
     window.sairDoSorteio = async function (idSorteio) {

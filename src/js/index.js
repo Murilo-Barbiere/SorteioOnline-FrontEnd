@@ -20,25 +20,28 @@ async function carregarSorteios() {
         }
 
         sorteios.forEach(sorteio => {
-            const urlCapa   = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
-            const statusFmt = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
+            if(sorteio.statusSorteio === 'ativo'){
+                const urlCapa   = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
+                const statusFmt = 'ativo'
 
-            container.innerHTML += `
-                <div class="card-sorteio">
-                    <div class="card-capa-container">
-                        <img src="${urlCapa}" alt="Capa de ${sorteio.nomeSorteio || 'Sorteio'}"
-                             onerror="this.src='https://placehold.co/600x350/000066/FFFFFF?text=Sem+Capa'">
-                    </div>
-                    <div class="card-info">
-                        <h3>${sorteio.nomeSorteio || 'Sorteio Sem Nome'}</h3>
-                        <p class="descricao">${statusFmt}</p>
-                    </div>
-                    <div class="card-footer">
-                        <button onclick="irParaDetalhes(${sorteio.id})" class="btn-participar">
-                            Ver Sorteio
-                        </button>
-                    </div>
-                </div>`;
+                container.innerHTML += `
+                    <div class="card-sorteio">
+                        <div class="card-capa-container">
+                            <img src="${urlCapa}" alt="Capa de ${sorteio.nomeSorteio || 'Sorteio'}"
+                                onerror="this.src='https://placehold.co/600x350/000066/FFFFFF?text=Sem+Capa'">
+                        </div>
+                        <div class="card-info">
+                            <h3>${sorteio.nomeSorteio || 'Sorteio Sem Nome'}</h3>
+                            <p class="descricao">${statusFmt}</p>
+                        </div>
+                        <div class="card-footer">
+                            <button onclick="irParaDetalhes(${sorteio.id})" class="btn-participar">
+                                Ver Sorteio
+                            </button>
+                        </div>
+                    </div>`;
+            }
+            
         });
 
     } catch (err) {
