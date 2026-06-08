@@ -72,6 +72,38 @@
     flex: 1;
 }
 
+/* ── Card — área do participante ─────────────────────────────────────────── */
+.card-participante-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ── Botão sair do sorteio ───────────────────────────────────────────────── */
+.btn-sair-sorteio {
+    background: rgba(255, 80, 80, 0.08);
+    color: #ff8080;
+    border: 1.5px solid rgba(255, 80, 80, 0.45);
+    padding: 10px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    width: 100%;
+    font-family: inherit;
+}
+
+.btn-sair-sorteio:hover {
+    background: rgba(255, 80, 80, 0.18);
+    border-color: #ff8080;
+}
+
+.btn-sair-sorteio:active {
+    transform: scale(0.98);
+}
+
 /* ── Field group no modal ────────────────────────────────────────────────── */
 .field-group {
     display: flex;

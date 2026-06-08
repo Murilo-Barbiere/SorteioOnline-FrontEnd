@@ -23,9 +23,9 @@
 
     // ── Helpers de card ───────────────────────────────────────────────────────
     function cardHTML(sorteio, modoEditor = false) {
-        const urlCapa    = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
-        const statusFmt  = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
-        const statusCls  = sorteio.statusSorteio === 'encerrado' ? 'status-enc' : 'status-ativo';
+        const urlCapa   = `${BASE_URL}/imagem/sorteio/${sorteio.id}/foto-capa`;
+        const statusFmt = (sorteio.statusSorteio || 'ativo').replace('_', ' ');
+        const statusCls = sorteio.statusSorteio === 'encerrado' ? 'status-enc' : 'status-ativo';
 
         const acoes = modoEditor
             ? `<div class="card-footer card-owner-acoes">
@@ -35,10 +35,13 @@
                        Ver detalhes
                    </button>
                </div>`
-            : `<div class="card-footer">
+            : `<div class="card-footer card-participante-acoes">
                    <button class="btn-participar"
                            onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
                        Ver Sorteio
+                   </button>
+                   <button class="btn-sair-sorteio" onclick="sairDoSorteio(${sorteio.id})">
+                       🚪 Sair do Sorteio
                    </button>
                </div>`;
 
@@ -126,7 +129,6 @@
         if (!nome) { toast('O nome é obrigatório.', 'error'); return; }
 
         try {
-            // Atualiza dados do sorteio
             const res = await fetch(`${BASE_URL}/sorteio/${id}`, {
                 method: 'PUT',
                 headers: authHeaders(),
@@ -134,7 +136,6 @@
             });
             if (!res.ok) throw new Error(await res.text() || 'Erro ao salvar.');
 
-            // Upload de capa se selecionada
             if (arquivo) {
                 const fd = new FormData();
                 fd.append('arquivo', arquivo);
@@ -147,11 +148,41 @@
 
             fecharModal('modal-editar-sorteio');
             toast('Sorteio atualizado!', 'success');
-            carregarCriados(); // Recarrega a lista
+            carregarCriados();
         } catch (err) {
             toast(err.message, 'error');
         }
     });
+
+    // ── Sair do sorteio ───────────────────────────────────────────────────────
+    window.sairDoSorteio = async function (idSorteio) {
+        if (!confirm('Tem certeza que deseja sair deste sorteio?')) return;
+
+        const payload = getUsuarioLogado();
+        const userId  = payload?.userId;
+
+        if (!userId) {
+            toast('Sessão expirada. Faça login novamente.', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetch(
+                `${BASE_URL}/sorteio/revome-participante/${userId}/${idSorteio}`,
+                { method: 'GET', headers: authHeaders() }
+            );
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || 'Não foi possível sair do sorteio.');
+            }
+
+            toast('Você saiu do sorteio com sucesso.', 'success');
+            carregarParticipando(); // recarrega a lista sem a entrada removida
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    };
 
     // ── Init ─────────────────────────────────────────────────────────────────
     carregarCriados();
