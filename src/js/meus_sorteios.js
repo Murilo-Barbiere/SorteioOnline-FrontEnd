@@ -36,6 +36,7 @@
             ? `<div class="card-footer card-owner-acoes">
                    <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">✏️ Editar</button>
                    ${btnSortearDinamico}
+                   <button class="btn-deletar-card" onclick="deletarSorteio(${sorteio.id})">🗑️ Excluir</button>
                    <button class="btn-participar btn-ver-card"
                            onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
                        Ver detalhes
@@ -210,6 +211,28 @@
 
             toast('Você saiu do sorteio com sucesso.', 'success');
             carregarParticipando(); // recarrega a lista sem a entrada removida
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    };
+
+    // ── Deletar sorteio ───────────────────────────────────────────────────────
+    window.deletarSorteio = async function (id) {
+        if (!confirm('Tem certeza que deseja excluir este sorteio? Esta ação não pode ser desfeita.')) return;
+
+        try {
+            const res = await fetch(`${BASE_URL}/sorteio/${id}`, {
+                method: 'DELETE',
+                headers: authHeaders(),
+            });
+
+            if (!res.ok) {
+                const msg = await res.text();
+                throw new Error(msg || 'Erro ao excluir o sorteio.');
+            }
+
+            toast('Sorteio excluído com sucesso!', 'success');
+            carregarCriados(); // recarrega a lista
         } catch (err) {
             toast(err.message, 'error');
         }
