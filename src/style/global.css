@@ -114,8 +114,23 @@ header h1 {
 }
 
 .auth-links .btn-usuario .usuario-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1.2rem;
     color: var(--primary-green);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+.auth-links .btn-usuario .usuario-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .auth-links .btn-usuario .usuario-nome {

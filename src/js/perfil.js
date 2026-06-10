@@ -146,8 +146,18 @@
 
             if (!res.ok) throw new Error('Falha no upload da foto.');
 
-            // Atualiza preview localmente
-            avatarImg.src = URL.createObjectURL(arquivo);
+            // Atualiza preview localmente e o cache do sistema
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64data = reader.result;
+                sessionStorage.setItem(`foto_perfil_${userId}`, base64data);
+                avatarImg.src = base64data;
+                
+                // Re-renderiza componentes do utils.js para atualizar header instantaneamente
+                if (typeof renderHeader === 'function') renderHeader();
+            };
+            reader.readAsDataURL(arquivo);
+
             toast('Foto de perfil atualizada!', 'success');
         } catch (err) {
             toast(err.message, 'error');

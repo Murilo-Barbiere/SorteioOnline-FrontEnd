@@ -66,15 +66,18 @@ function renderHeader() {
     if (isLogado()) {
         const payload = getUsuarioLogado();
         const nome = payload.sub?.split('@')[0] || 'Usuário'; // usa email como fallback
+        const userId = payload.userId;
+        const fotoUrl = `${BASE_URL}/imagem/usuario/${userId}/foto-perfil`;
+
         authLinks.innerHTML = `
             <a href="${resolveRaiz('src/pages/perfil.html')}" class="btn-usuario" title="Meu perfil">
-                <span class="usuario-avatar">👤</span>
+                <span class="usuario-avatar" id="header-avatar">👤</span>
                 <span class="usuario-nome" id="header-nome">${nome}</span>
             </a>
             <a href="#" onclick="logout()" class="btn-sair">Sair</a>
         `;
         // Busca o nome real na API
-        fetch(`${BASE_URL}/usuario/${payload.userId}`, { headers: authHeaders() })
+        fetch(`${BASE_URL}/usuario/${userId}`, { headers: authHeaders() })
             .then(r => r.ok ? r.json() : null)
             .then(data => {
                 if (data?.nome) {
@@ -83,6 +86,31 @@ function renderHeader() {
                 }
             })
             .catch(() => {});
+
+        // Tenta carregar a foto de perfil (com cache em sessionStorage)
+        const cacheKey = `foto_perfil_${userId}`;
+        const cachedFoto = sessionStorage.getItem(cacheKey);
+
+        if (cachedFoto) {
+            const avatarEl = document.getElementById('header-avatar');
+            if (avatarEl) avatarEl.innerHTML = `<img src="${cachedFoto}" alt="Foto">`;
+        } else {
+            fetch(fotoUrl)
+                .then(res => res.ok ? res.blob() : null)
+                .then(blob => {
+                    if (blob) {
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                            const base64data = reader.result;
+                            sessionStorage.setItem(cacheKey, base64data);
+                            const avatarEl = document.getElementById('header-avatar');
+                            if (avatarEl) avatarEl.innerHTML = `<img src="${base64data}" alt="Foto">`;
+                        };
+                        reader.readAsDataURL(blob);
+                    }
+                })
+                .catch(() => {});
+        }
     } else {
         authLinks.innerHTML = `
             <a href="${resolveRaiz('src/pages/login.html')}">Entrar</a>
