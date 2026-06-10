@@ -4,33 +4,35 @@
 .tabs {
     display: flex;
     gap: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 4px;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .tab {
     background: transparent;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     border: none;
-    padding: 10px 22px;
+    padding: 12px 24px;
     border-radius: 10px 10px 0 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s;
     font-family: inherit;
     border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
 }
 
 .tab:hover {
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.05);
+    color: var(--primary-green);
+    background: rgba(39, 174, 96, 0.05);
 }
 
 .tab.active {
-    color: #fff;
-    border-bottom-color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--primary-green);
+    border-bottom-color: var(--primary-green);
+    background: rgba(39, 174, 96, 0.08);
 }
 
 /* ── Seções ──────────────────────────────────────────────────────────────── */
@@ -48,13 +50,14 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    margin-top: 5px;
 }
 
-.btn-editar-card {
+.card-sorteio .btn-editar-card {
     flex: 1;
     background: rgba(255, 200, 50, 0.1);
-    color: #ffd166;
-    border: 1.5px solid #ffd166;
+    color: #f39c12;
+    border: 1.5px solid #f39c12;
     padding: 10px;
     border-radius: 14px;
     font-size: 0.85rem;
@@ -64,31 +67,50 @@
     text-align: center;
 }
 
-.btn-editar-card:hover {
-    background: rgba(255, 200, 50, 0.2);
+.card-sorteio .btn-editar-card:hover {
+    background: #f39c12;
+    color: #fff;
 }
 
-.btn-deletar-card {
+.card-sorteio .btn-deletar-card {
     flex: 1;
-    background: rgba(255, 80, 80, 0.1);
-    color: #ff8080;
-    border: 1.5px solid #ff8080;
-    padding: 10px;
-    border-radius: 14px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    background: #e74c3c !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s !important;
     text-align: center;
 }
 
-.btn-deletar-card:hover {
-    background: rgba(255, 80, 80, 0.2);
-    box-shadow: 0 0 10px rgba(255, 80, 80, 0.2);
+.card-sorteio .btn-deletar-card:hover {
+    background: #c0392b !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
 }
 
-.btn-ver-card {
+.card-sorteio .btn-ver-card {
     flex: 1;
+    background: var(--primary-green) !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 12px !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: all 0.25s !important;
+    text-align: center;
+    text-decoration: none;
+}
+
+.card-sorteio .btn-ver-card:hover {
+    background: var(--secondary-green) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
 }
 
 /* ── Botão de Sortear (Novo) ─────────────────────────────────────────────── */
@@ -159,20 +181,20 @@
     font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--text-muted);
     font-weight: 600;
 }
 
 /* ── Loading / empty ─────────────────────────────────────────────────────── */
 .loading-msg {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     font-size: 0.95rem;
     padding: 20px 0;
 }
 
 .empty-msg {
     grid-column: 1 / -1;
-    color: rgba(255, 255, 255, 0.45);
+    color: var(--text-muted);
     font-size: 0.95rem;
     text-align: center;
     padding: 40px 0;

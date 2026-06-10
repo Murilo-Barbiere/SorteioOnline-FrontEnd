@@ -34,9 +34,9 @@
 
         const acoes = modoEditor
             ? `<div class="card-footer card-owner-acoes">
-                   <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">✏️ Editar</button>
+                   <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">Editar</button>
                    ${btnSortearDinamico}
-                   <button class="btn-deletar-card" onclick="deletarSorteio(${sorteio.id})">🗑️ Excluir</button>
+                   <button class="btn-deletar-card" onclick="deletarSorteio(${sorteio.id})">Excluir</button>
                    <button class="btn-participar btn-ver-card"
                            onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
                        Ver detalhes
@@ -48,7 +48,7 @@
                        Ver Sorteio
                    </button>
                    <button class="btn-sair-sorteio" onclick="sairDoSorteio(${sorteio.id})">
-                       🚪 Sair do Sorteio
+                       Sair do Sorteio
                    </button>
                </div>`;
 
