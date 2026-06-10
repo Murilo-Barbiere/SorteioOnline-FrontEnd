@@ -5,7 +5,7 @@ async function handleCredentialResponse(response) {
     try {
 
         const res = await fetch(
-            "http://localhost:8080/auth/google-login",
+            `${BASE_URL}/auth/google-login`,
             {
                 method: "POST",
 

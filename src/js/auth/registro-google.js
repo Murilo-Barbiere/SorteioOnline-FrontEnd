@@ -5,7 +5,7 @@ async function handleCredentialResponse(response) {
     try {
 
         const res = await fetch(
-            "http://localhost:8080/auth/google-register",
+            `${BASE_URL}/auth/google-register`,
             {
                 method: "POST",
                 headers: {
@@ -26,7 +26,7 @@ async function handleCredentialResponse(response) {
         sessionStorage.setItem("token", data.token);
 
         alert('Cadastro realizado com sucesso!');
-        window.location.href = '../index.html';
+        window.location.href = '../../index.html';
 
     } catch (err){
 
