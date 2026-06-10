@@ -29,7 +29,7 @@
 
         // Condicional para exibir o botão de sorteio apenas se ele não estiver encerrado ainda
         const btnSortearDinamico = sorteio.statusSorteio !== 'encerrado'
-            ? `<button class="btn-sortear-card" onclick="realizarSorteio(${sorteio.id})">🎲 Sortear</button>`
+            ? `<button class="btn-sortear-card" onclick="realizarSorteio(${sorteio.id})">Sortear</button>`
             : '';
 
         const acoes = modoEditor
@@ -133,7 +133,15 @@
         const status  = document.getElementById('edit-status').value;
         const arquivo = document.getElementById('edit-capa').files[0];
 
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
         if (!nome) { toast('O nome é obrigatório.', 'error'); return; }
+
+        if (arquivo && arquivo.size > MAX_FILE_SIZE) {
+            toast('A imagem de capa não pode ser maior que 5MB.', 'error');
+            document.getElementById('edit-capa').value = '';
+            return;
+        }
 
         try {
             const res = await fetch(`${BASE_URL}/sorteio/${id}`, {
@@ -146,11 +154,20 @@
             if (arquivo) {
                 const fd = new FormData();
                 fd.append('arquivo', arquivo);
-                await fetch(`${BASE_URL}/imagem/sorteio/${id}/foto-capa`, {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${getToken()}` },
-                    body: fd,
-                }).catch(() => {});
+                try {
+                    const resCapa = await fetch(`${BASE_URL}/imagem/sorteio/${id}/foto-capa`, {
+                        method: 'POST',
+                        headers: { 'Authorization': `Bearer ${getToken()}` },
+                        body: fd,
+                    });
+                    if (!resCapa.ok) {
+                        const msg = await resCapa.text();
+                        throw new Error(msg || 'Erro ao enviar a nova imagem de capa.');
+                    }
+                } catch (err) {
+                    if (err.message.includes('Erro ao enviar')) throw err;
+                    throw new Error('Falha na comunicação ao enviar a nova capa.');
+                }
             }
 
             fecharModal('modal-editar-sorteio');

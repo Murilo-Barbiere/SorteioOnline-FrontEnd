@@ -97,6 +97,13 @@ async function uploadFotoPerfil() {
     
     if(!arquivo) return alert("Selecione uma imagem!");
 
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (arquivo.size > MAX_FILE_SIZE) {
+        alert("A foto de perfil não pode ser maior que 5MB.");
+        document.getElementById("edit-user-foto").value = '';
+        return;
+    }
+
     const formData = new FormData();
     formData.append("arquivo", arquivo);
 
@@ -226,6 +233,13 @@ async function uploadFotoCapa() {
     const arquivo = document.getElementById("edit-sorteio-capa").files[0];
     
     if(!arquivo) return alert("Selecione uma imagem!");
+
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    if (arquivo.size > MAX_FILE_SIZE) {
+        alert("A capa do sorteio não pode ser maior que 5MB.");
+        document.getElementById("edit-sorteio-capa").value = '';
+        return;
+    }
 
     const formData = new FormData();
     formData.append("arquivo", arquivo);

@@ -128,11 +128,19 @@
     });
 
     // ── Trocar foto de perfil ────────────────────────────────────────────────
+    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+
     btnTrocarFoto.addEventListener('click', () => inputFoto.click());
 
     inputFoto.addEventListener('change', async () => {
         const arquivo = inputFoto.files[0];
         if (!arquivo) return;
+
+        if (arquivo.size > MAX_FILE_SIZE) {
+            toast('A foto de perfil não pode ser maior que 5MB.', 'error');
+            inputFoto.value = '';
+            return;
+        }
 
         const formData = new FormData();
         formData.append('arquivo', arquivo);
