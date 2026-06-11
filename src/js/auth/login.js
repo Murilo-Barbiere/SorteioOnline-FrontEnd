@@ -1,8 +1,3 @@
-/**
- * login.js — Autenticação com e-mail e senha
- * Requer: utils.js (parseJwt, toast, BASE_URL)
- */
-
 document.getElementById('form-login').addEventListener('submit', async e => {
     e.preventDefault();
 

@@ -1,8 +1,3 @@
-/**
- * registrar.js — Cadastro de novo usuário
- * Requer: utils.js
- */
-
 document.getElementById('form-register').addEventListener('submit', async e => {
     e.preventDefault();
 

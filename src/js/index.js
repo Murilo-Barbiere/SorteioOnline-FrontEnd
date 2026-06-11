@@ -1,8 +1,3 @@
-/**
- * index.js — Página inicial: lista de sorteios disponíveis
- * Requer: utils.js
- */
-
 async function carregarSorteios() {
     const container = document.getElementById('container-cards');
     if (!container) return;

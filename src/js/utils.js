@@ -1,4 +1,4 @@
-const BASE_URL = 'localhost:8080';
+const BASE_URL = 'http://localhost:8080';
 
     // ── Token ──────────────────────────────────────────────────────────────────
 
@@ -44,7 +44,6 @@ const BASE_URL = 'localhost:8080';
     }
 
     // ── Resolução de caminho relativo à raiz ────────────────────────────────────
-    // Permite que qualquer página use caminhos absolutos a partir da raiz do site
 
     function resolveRaiz(caminho) {
         // Conta quantos níveis de profundidade a página atual está
@@ -57,7 +56,6 @@ const BASE_URL = 'localhost:8080';
         return prefixo + caminho;
     }
 
-    // ── Header dinâmico ────────────────────────────────────────────────────────
 
     function renderHeader() {
         const authLinks = document.querySelector('.auth-links');
@@ -73,7 +71,6 @@ const BASE_URL = 'localhost:8080';
                 </a>
                 <a href="#" onclick="logout()" class="btn-sair">Sair</a>
             `;
-            // Busca o nome real na API
             fetch(`${BASE_URL}/usuario/${payload.userId}`, { headers: authHeaders() })
                 .then(r => r.ok ? r.json() : null)
                 .then(data => {
@@ -91,7 +88,6 @@ const BASE_URL = 'localhost:8080';
         }
     }
 
-    // ── Sidebar ativo ──────────────────────────────────────────────────────────
 
     function marcarSidebarAtivo() {
         const path = window.location.pathname;
@@ -104,7 +100,6 @@ const BASE_URL = 'localhost:8080';
         });
     }
 
-    // ── Toast / notificação ────────────────────────────────────────────────────
 
     function toast(msg, tipo = 'success') {
         const el = document.createElement('div');
@@ -118,11 +113,14 @@ const BASE_URL = 'localhost:8080';
         }, 3000);
     }
 
-    // ── Validação de Arquivo ───────────────────────────────────────────────────
 
     const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
     const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
 
+    /**
+     * Valida tipo e tamanho de uma imagem.
+     * @returns {string|null} Mensagem de erro, ou null se válido.
+     */
     function validarArquivoImagem(file) {
         if (!file) return null;
         if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
@@ -132,6 +130,22 @@ const BASE_URL = 'localhost:8080';
             return 'A imagem é muito grande. Máximo 2MB.';
         }
         return null;
+    }
+
+    /**
+     * Valida um arquivo de imagem, exibe toast de erro e limpa o input caso inválido.
+     * @param {File} file - Arquivo selecionado.
+     * @param {HTMLInputElement} inputEl - Input que deve ser limpo em caso de erro.
+     * @returns {boolean} true se válido, false se inválido.
+     */
+    function validarELimparInput(file, inputEl) {
+        const erro = validarArquivoImagem(file);
+        if (erro) {
+            toast(erro, 'error');
+            if (inputEl) inputEl.value = '';
+            return false;
+        }
+        return true;
     }
 
     // ── Modal genérico ─────────────────────────────────────────────────────────

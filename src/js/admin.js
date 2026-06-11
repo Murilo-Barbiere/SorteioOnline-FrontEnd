@@ -92,27 +92,34 @@ async function salvarUsuario() {
 }
 
 async function uploadFotoPerfil() {
-    const id = document.getElementById("edit-user-id").value;
-    const arquivo = document.getElementById("edit-user-foto").files[0];
-    
-    if(!arquivo) return alert("Selecione uma imagem!");
+    const inputEl = document.getElementById("edit-user-foto");
+    const arquivo = inputEl.files[0];
 
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-    if (arquivo.size > MAX_FILE_SIZE) {
-        alert("A foto de perfil não pode ser maior que 5MB.");
-        document.getElementById("edit-user-foto").value = '';
+    if (!arquivo) {
+        toast("Selecione uma imagem antes de enviar.", "error");
         return;
     }
+
+    // Valida tipo e tamanho; limpa o input e exibe toast se inválido
+    if (!validarELimparInput(arquivo, inputEl)) return;
 
     const formData = new FormData();
     formData.append("arquivo", arquivo);
 
-    await fetch(`${API_URL}/imagem/usuario/${id}/foto-perfil`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${TOKEN}` },
-        body: formData
-    });
-    alert("Foto atualizada com sucesso!");
+    try {
+        const id = document.getElementById("edit-user-id").value;
+        const res = await fetch(`${API_URL}/imagem/usuario/${id}/foto-perfil`, {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${TOKEN}` },
+            body: formData
+        });
+
+        if (!res.ok) throw new Error("Falha no upload da foto.");
+        toast("Foto de perfil atualizada com sucesso!", "success");
+        inputEl.value = '';
+    } catch (err) {
+        toast(err.message, "error");
+    }
 }
 
 // ==========================================
@@ -229,27 +236,34 @@ async function salvarSorteio() {
 }
 
 async function uploadFotoCapa() {
-    const id = document.getElementById("edit-sorteio-id").value;
-    const arquivo = document.getElementById("edit-sorteio-capa").files[0];
-    
-    if(!arquivo) return alert("Selecione uma imagem!");
+    const inputEl = document.getElementById("edit-sorteio-capa");
+    const arquivo = inputEl.files[0];
 
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-    if (arquivo.size > MAX_FILE_SIZE) {
-        alert("A capa do sorteio não pode ser maior que 5MB.");
-        document.getElementById("edit-sorteio-capa").value = '';
+    if (!arquivo) {
+        toast("Selecione uma imagem antes de enviar.", "error");
         return;
     }
+
+    // Valida tipo e tamanho; limpa o input e exibe toast se inválido
+    if (!validarELimparInput(arquivo, inputEl)) return;
 
     const formData = new FormData();
     formData.append("arquivo", arquivo);
 
-    await fetch(`${API_URL}/imagem/sorteio/${id}/foto-capa`, {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${TOKEN}` },
-        body: formData
-    });
-    alert("Capa do sorteio atualizada!");
+    try {
+        const id = document.getElementById("edit-sorteio-id").value;
+        const res = await fetch(`${API_URL}/imagem/sorteio/${id}/foto-capa`, {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${TOKEN}` },
+            body: formData
+        });
+
+        if (!res.ok) throw new Error("Falha no upload da capa.");
+        toast("Capa do sorteio atualizada com sucesso!", "success");
+        inputEl.value = '';
+    } catch (err) {
+        toast(err.message, "error");
+    }
 }
 
 // PARTICIPANTES

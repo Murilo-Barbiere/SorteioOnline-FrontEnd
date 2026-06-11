@@ -1,8 +1,3 @@
-/**
- * meus_sorteios.js — Sorteios criados pelo usuário + sorteios que participa
- * Requer: utils.js
- */
-
 (function () {
     if (!isLogado()) {
         window.location.href = resolveRaiz('src/pages/login.html');
@@ -119,6 +114,9 @@
             document.getElementById('edit-desc').value   = s.descricao   || '';
             document.getElementById('edit-status').value = s.statusSorteio || 'ativo';
 
+            // Limpa input de capa ao abrir o modal
+            document.getElementById('edit-capa').value = '';
+
             abrirModal('modal-editar-sorteio');
         } catch (err) {
             toast(err.message, 'error');
@@ -130,15 +128,19 @@
         const nome    = document.getElementById('edit-nome').value.trim();
         const desc    = document.getElementById('edit-desc').value.trim();
         const status  = document.getElementById('edit-status').value;
-        const arquivo = document.getElementById('edit-capa').files[0];
+        const inputCapa = document.getElementById('edit-capa');
+        const arquivo = inputCapa.files[0];
 
         if (!nome) { toast('O nome é obrigatório.', 'error'); return; }
 
-        // Validação de arquivo se houver um selecionado
-        const erroArquivo = validarArquivoImagem(arquivo);
-        if (erroArquivo) {
-            toast(erroArquivo, 'error');
-            return;
+        // Validação de arquivo: exibe erro, limpa o input e bloqueia o envio
+        if (arquivo) {
+            const erroArquivo = validarArquivoImagem(arquivo);
+            if (erroArquivo) {
+                toast(erroArquivo, 'error');
+                inputCapa.value = '';
+                return;
+            }
         }
 
         try {
@@ -167,7 +169,7 @@
         }
     });
 
-    // ── Disparar Ação de Sortear Manualmente (Novo) ───────────────────────────
+    // ── Disparar Ação de Sortear Manualmente ─────────────────────────────────
     window.realizarSorteio = async function (idSorteio) {
         if (!confirm('Deseja realmente realizar este sorteio agora? O sistema escolherá um vencedor e disparará as notificações por e-mail.')) return;
 
