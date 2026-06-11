@@ -128,17 +128,15 @@
     });
 
     // ── Trocar foto de perfil ────────────────────────────────────────────────
-    const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-
     btnTrocarFoto.addEventListener('click', () => inputFoto.click());
 
     inputFoto.addEventListener('change', async () => {
         const arquivo = inputFoto.files[0];
         if (!arquivo) return;
 
-        if (arquivo.size > MAX_FILE_SIZE) {
-            toast('A foto de perfil não pode ser maior que 5MB.', 'error');
-            inputFoto.value = '';
+        const erro = validarArquivoImagem(arquivo);
+        if (erro) {
+            toast(erro, 'error');
             return;
         }
 
@@ -154,18 +152,8 @@
 
             if (!res.ok) throw new Error('Falha no upload da foto.');
 
-            // Atualiza preview localmente e o cache do sistema
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64data = reader.result;
-                sessionStorage.setItem(`foto_perfil_${userId}`, base64data);
-                avatarImg.src = base64data;
-                
-                // Re-renderiza componentes do utils.js para atualizar header instantaneamente
-                if (typeof renderHeader === 'function') renderHeader();
-            };
-            reader.readAsDataURL(arquivo);
-
+            // Atualiza preview localmente
+            avatarImg.src = URL.createObjectURL(arquivo);
             toast('Foto de perfil atualizada!', 'success');
         } catch (err) {
             toast(err.message, 'error');

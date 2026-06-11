@@ -29,14 +29,13 @@
 
         // Condicional para exibir o botão de sorteio apenas se ele não estiver encerrado ainda
         const btnSortearDinamico = sorteio.statusSorteio !== 'encerrado'
-            ? `<button class="btn-sortear-card" onclick="realizarSorteio(${sorteio.id})">Sortear</button>`
+            ? `<button class="btn-sortear-card" onclick="realizarSorteio(${sorteio.id})">🎲 Sortear</button>`
             : '';
 
         const acoes = modoEditor
             ? `<div class="card-footer card-owner-acoes">
-                   <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">Editar</button>
+                   <button class="btn-editar-card" onclick="abrirEdicao(${sorteio.id})">✏️ Editar</button>
                    ${btnSortearDinamico}
-                   <button class="btn-deletar-card" onclick="deletarSorteio(${sorteio.id})">Excluir</button>
                    <button class="btn-participar btn-ver-card"
                            onclick="window.location.href=resolveRaiz('src/pages/detalhes_sorteio.html?id=${sorteio.id}')">
                        Ver detalhes
@@ -48,7 +47,7 @@
                        Ver Sorteio
                    </button>
                    <button class="btn-sair-sorteio" onclick="sairDoSorteio(${sorteio.id})">
-                       Sair do Sorteio
+                       🚪 Sair do Sorteio
                    </button>
                </div>`;
 
@@ -133,13 +132,12 @@
         const status  = document.getElementById('edit-status').value;
         const arquivo = document.getElementById('edit-capa').files[0];
 
-        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-
         if (!nome) { toast('O nome é obrigatório.', 'error'); return; }
 
-        if (arquivo && arquivo.size > MAX_FILE_SIZE) {
-            toast('A imagem de capa não pode ser maior que 5MB.', 'error');
-            document.getElementById('edit-capa').value = '';
+        // Validação de arquivo se houver um selecionado
+        const erroArquivo = validarArquivoImagem(arquivo);
+        if (erroArquivo) {
+            toast(erroArquivo, 'error');
             return;
         }
 
@@ -154,20 +152,11 @@
             if (arquivo) {
                 const fd = new FormData();
                 fd.append('arquivo', arquivo);
-                try {
-                    const resCapa = await fetch(`${BASE_URL}/imagem/sorteio/${id}/foto-capa`, {
-                        method: 'POST',
-                        headers: { 'Authorization': `Bearer ${getToken()}` },
-                        body: fd,
-                    });
-                    if (!resCapa.ok) {
-                        const msg = await resCapa.text();
-                        throw new Error(msg || 'Erro ao enviar a nova imagem de capa.');
-                    }
-                } catch (err) {
-                    if (err.message.includes('Erro ao enviar')) throw err;
-                    throw new Error('Falha na comunicação ao enviar a nova capa.');
-                }
+                await fetch(`${BASE_URL}/imagem/sorteio/${id}/foto-capa`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${getToken()}` },
+                    body: fd,
+                }).catch(() => {});
             }
 
             fecharModal('modal-editar-sorteio');
@@ -228,28 +217,6 @@
 
             toast('Você saiu do sorteio com sucesso.', 'success');
             carregarParticipando(); // recarrega a lista sem a entrada removida
-        } catch (err) {
-            toast(err.message, 'error');
-        }
-    };
-
-    // ── Deletar sorteio ───────────────────────────────────────────────────────
-    window.deletarSorteio = async function (id) {
-        if (!confirm('Tem certeza que deseja excluir este sorteio? Esta ação não pode ser desfeita.')) return;
-
-        try {
-            const res = await fetch(`${BASE_URL}/sorteio/${id}`, {
-                method: 'DELETE',
-                headers: authHeaders(),
-            });
-
-            if (!res.ok) {
-                const msg = await res.text();
-                throw new Error(msg || 'Erro ao excluir o sorteio.');
-            }
-
-            toast('Sorteio excluído com sucesso!', 'success');
-            carregarCriados(); // recarrega a lista
         } catch (err) {
             toast(err.message, 'error');
         }
